@@ -1,13 +1,12 @@
-import { locations } from "./location.mock";
 var camelize = require("camelize");
+import { host, isMock } from "../../utils/env";
 
 export const locationRequest = (searchTerm) => {
-  return new Promise((resolve, reject) => {
-    const locationMock = locations[searchTerm];
-    if (!locationMock) {
-      reject("not found");
-    }
-    resolve(locationMock);
+  // Interaction between firebase local function and 
+  return fetch(
+    `${host}geocode?city=${searchTerm}&mock=${isMock}`
+  ).then((res) => { 
+    return res.json();
   });
 };
 
